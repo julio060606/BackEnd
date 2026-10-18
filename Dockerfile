@@ -1,16 +1,12 @@
 # Build Stage
-FROM eclipse-temurin:21-jdk-jammy AS build
+FROM maven:3.9.9-eclipse-temurin-21 AS build
 WORKDIR /app
 
-# Copy Maven files
-COPY pom.xml ./
-# If maven wrapper exists, copy it, otherwise install maven or build with jar
-RUN apt-get update && apt-get install -y maven
-
-# Download dependencies
+# Cache dependencies
+COPY pom.xml .
 RUN mvn dependency:go-offline -B
 
-# Copy source code and build
+# Build application
 COPY src ./src
 RUN mvn clean package -DskipTests
 
@@ -20,10 +16,13 @@ WORKDIR /app
 
 # Create unprivileged user for security
 RUN groupadd -r chasquifly && useradd -r -g chasquifly chasquifly
-USER chasquifly
 
-COPY --from=build /app/target/*.jar app.jar
+# Copy jar from build stage with correct permissions
+COPY --from=build --chown=chasquifly:chasquifly /app/target/*.jar app.jar
+
+USER chasquifly
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
+# Configure memory limits for Render free tier (512 MB RAM)
+ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]

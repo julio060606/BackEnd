@@ -13,6 +13,10 @@ public class DuffelService {
 
     private final DuffelClient duffelClient;
 
+    public List<DuffelOfferResponse> searchOffers(DuffelSearchRequest request) {
+        return duffelClient.searchOffers(request);
+    }
+
     public List<DuffelOfferResponse> fetchExternalOffers(DuffelSearchRequest request) {
         return duffelClient.searchOffers(request);
     }
