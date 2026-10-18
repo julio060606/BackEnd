@@ -50,6 +50,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/airports/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/flights/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/flights/compare").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/flight-status/**").permitAll()
                         // Swagger & Actuator
                         .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
