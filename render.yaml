@@ -2,8 +2,8 @@ services:
   - type: web
     name: chasquifly-backend
     env: docker
-    dockerfilePath: BackEnd/Dockerfile
-    dockerContext: BackEnd
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
     plan: free
     region: oregon
     healthCheckPath: /actuator/health
@@ -20,5 +20,9 @@ services:
         sync: false
       - key: JWT_SECRET
         generateValue: true
+      - key: DUFFEL_ENABLED
+        value: "false"
+      - key: DUFFEL_API_TOKEN
+        sync: false
       - key: CORS_ALLOWED_ORIGINS
         value: https://chasquifly.vercel.app,http://localhost:5173
