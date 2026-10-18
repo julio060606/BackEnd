@@ -17,5 +17,7 @@ public class UserSummaryDto {
     private String email;
     private String firstName;
     private String lastName;
+    private String phone;
     private String role;
+    private java.time.OffsetDateTime createdAt;
 }
