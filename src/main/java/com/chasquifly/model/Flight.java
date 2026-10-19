@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+/**
+ * Entidad JPA que representa un vuelo indexado con su tarifa base, horarios y estado operativo.
+ */
 @Entity
 @Table(name = "flights")
 @Getter
