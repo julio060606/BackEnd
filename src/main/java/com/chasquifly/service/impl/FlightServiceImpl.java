@@ -68,6 +68,9 @@ public class FlightServiceImpl implements FlightService {
                 .toList();
     }
 
+    /**
+     * Consulta un vuelo por su UUID o lanza ResourceNotFoundException si no existe.
+     */
     @Override
     @Transactional(readOnly = true)
     public FlightResponseDto getFlightById(UUID flightId) {
