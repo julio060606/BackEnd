@@ -1,4 +1,4 @@
-package com.chasquifly.dto.common;
+﻿package com.chasquifly.dto.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +11,13 @@ import java.time.OffsetDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+/**
+ * Envoltura estandarizada de respuestas exitosas de la API REST ChasquiFly.
+ * Proporciona una estructura uniforme con timestamp, estado y carga util de datos.
+ * 
+ * @param <T> Tipo de datos devuelto en la respuesta
+ * @author SamuelHuamanHuillca
+ */
 public class ApiResponse<T> {
 
     @Builder.Default
