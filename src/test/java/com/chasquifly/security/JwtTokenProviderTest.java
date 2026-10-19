@@ -1,4 +1,4 @@
-package com.chasquifly.security;
+﻿package com.chasquifly.security;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,6 +13,12 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Pruebas unitarias para validar la robustez y seguridad del componente JwtTokenProvider.
+ * Cubre escenarios de expiracion, firmas alteradas y extraccion correcta de claims.
+ * 
+ * @author SamuelHuamanHuillca
+ */
 class JwtTokenProviderTest {
 
     private JwtTokenProvider tokenProvider;
