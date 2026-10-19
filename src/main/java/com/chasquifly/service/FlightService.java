@@ -12,12 +12,16 @@ public interface FlightService {
 
     List<FlightResponseDto> searchFlights(FlightSearchCriteria criteria);
 
+    /** Obtiene el detalle de un vuelo por su identificador UUID. */
     FlightResponseDto getFlightById(UUID flightId);
 
+    /** Registra un nuevo vuelo validando sus relaciones de aerolínea y aeropuertos. */
     FlightResponseDto createFlight(CreateFlightDto dto);
 
+    /** Actualiza los datos de un vuelo existente en el catálogo. */
     FlightResponseDto updateFlight(UUID flightId, CreateFlightDto dto);
 
+    /** Elimina un vuelo existente por su identificador UUID. */
     void deleteFlight(UUID flightId);
 
     FlightComparisonDto compareFlights(List<UUID> flightIds);
