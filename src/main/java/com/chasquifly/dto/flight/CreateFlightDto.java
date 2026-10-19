@@ -39,10 +39,12 @@ public class CreateFlightDto {
     @NotNull(message = "La fecha y hora de llegada es obligatoria")
     private OffsetDateTime arrivalTime;
 
+    /** Tarifa base del vuelo expresada en USD (mayor a 0.01). */
     @NotNull(message = "El precio base es obligatorio")
     @DecimalMin(value = "0.01", message = "El precio debe ser mayor a 0")
     private BigDecimal basePrice;
 
+    /** Capacidad inicial o asientos disponibles para reserva. */
     @Min(value = 1, message = "Debe haber al menos 1 asiento disponible")
     @Builder.Default
     private Integer availableSeats = 100;
