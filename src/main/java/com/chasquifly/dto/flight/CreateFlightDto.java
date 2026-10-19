@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
+/**
+ * DTO de entrada para las operaciones administrativas de registro y edición de vuelos.
+ */
 @Data
 @Builder
 @NoArgsConstructor
