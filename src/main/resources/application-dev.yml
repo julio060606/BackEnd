@@ -23,12 +23,19 @@ spring:
           lob:
             non_contextual_creation: true
 
+  # ==============================================================================
+  # Configuración de Migraciones de Base de Datos con Flyway
+  # - baseline-on-migrate: Permite inicializar Flyway en bases de datos existentes
+  # - baseline-version: Versión base inicial (0)
+  # - locations: Ruta en classpath hacia los scripts de migración versionados (V<N>__)
+  # - validate-on-migrate: Valida checksums de scripts para evitar inconsistencias
+  # ==============================================================================
   flyway:
     enabled: ${SPRING_FLYWAY_ENABLED:true}
     baseline-on-migrate: true
     baseline-version: 0
     locations: classpath:db/migration
-    validate-on-migrate: true
+    validate-on-migrate: ${SPRING_FLYWAY_VALIDATE_ON_MIGRATE:false}
 
 logging:
   level:

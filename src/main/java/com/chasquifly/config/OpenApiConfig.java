@@ -1,4 +1,4 @@
-package com.chasquifly.config;
+﻿package com.chasquifly.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -14,6 +14,12 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 @Configuration
+/**
+ * Configuracion de OpenAPI 3 / Swagger UI para documentacion interactiva de la API.
+ * Incluye la definicion del esquema de seguridad Bearer JWT para pruebas de endpoints protegidos.
+ * 
+ * @author SamuelHuamanHuillca
+ */
 public class OpenApiConfig {
 
     private static final String SECURITY_SCHEME_NAME = "BearerAuth";

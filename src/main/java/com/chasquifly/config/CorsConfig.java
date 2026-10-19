@@ -1,4 +1,4 @@
-package com.chasquifly.config;
+﻿package com.chasquifly.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,9 +11,16 @@ import java.util.Arrays;
 import java.util.List;
 
 @Configuration
+/**
+ * Configuracion global de politicas CORS (Cross-Origin Resource Sharing).
+ * Habilita comunicacion segura entre el cliente frontend (Vite/React) y la API REST.
+ * 
+ * @author SamuelHuamanHuillca
+ * @version 1.0 (US01)
+ */
 public class CorsConfig {
 
-    @Value("${app.cors.allowed-origins:http://localhost:5173,http://localhost:3000,https://chasquifly.vercel.app}")
+    @Value("${app.cors.allowed-origins:http://localhost:5173,http://localhost:3000,https://*.vercel.app,https://chasquifly.vercel.app}")
     private String allowedOrigins;
 
     @Bean
@@ -23,7 +30,7 @@ public class CorsConfig {
                 .map(String::trim)
                 .toList();
         
-        configuration.setAllowedOrigins(origins);
+        configuration.setAllowedOriginPatterns(origins);
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
         configuration.setExposedHeaders(List.of("Authorization", "Link", "X-Total-Count"));

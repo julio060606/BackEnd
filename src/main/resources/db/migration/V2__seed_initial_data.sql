@@ -11,7 +11,8 @@ VALUES
     ('a0000000-0000-0000-0000-000000000002', 'demo@chasquifly.com', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'Pasajero', 'Demostración', '+51912345678', 'ROLE_USER', TRUE)
 ON CONFLICT (email) DO NOTHING;
 
--- 2. Seed Peruvian Airports
+-- 2. Seed Peruvian Airports (Catálogo inicial de principales aeropuertos comerciales del Perú)
+-- Incluye código IATA estandarizado, ciudad sede y huso horario oficial de Perú (America/Lima)
 INSERT INTO airports (id, iata_code, name, city, country, timezone)
 VALUES 
     (1, 'LIM', 'Aeropuerto Internacional Jorge Chávez', 'Lima', 'Perú', 'America/Lima'),
@@ -23,10 +24,10 @@ VALUES
     (7, 'TBP', 'Aeropuerto Capitán FAP Pedro Canga Rodríguez', 'Tumbes', 'Perú', 'America/Lima')
 ON CONFLICT (iata_code) DO NOTHING;
 
--- Adjust sequence for airports
+-- Sincronización de secuencia para evitar colisiones de IDs autoincrementables en inserciones manuales
 SELECT setval('airports_id_seq', (SELECT MAX(id) FROM airports));
 
--- 3. Seed Airlines
+-- 3. Seed Airlines (Operadores aéreos principales con presencia nacional e internacional)
 INSERT INTO airlines (id, iata_code, name, logo_url)
 VALUES 
     (1, 'LA', 'LATAM Airlines', '/logos/latam.png'),
@@ -34,7 +35,7 @@ VALUES
     (3, 'JA', 'JetSMART Perú', '/logos/jetsmart.png')
 ON CONFLICT (iata_code) DO NOTHING;
 
--- Adjust sequence for airlines
+-- Sincronización de secuencia de llaves primarias para la tabla airlines
 SELECT setval('airlines_id_seq', (SELECT MAX(id) FROM airlines));
 
 -- 4. Seed Representative Flights (Domestic routes within Peru)

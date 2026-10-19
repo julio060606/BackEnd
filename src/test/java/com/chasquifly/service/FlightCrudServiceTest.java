@@ -27,6 +27,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * Suite de pruebas unitarias para las operaciones CRUD de vuelos en FlightServiceImpl.
+ */
 @ExtendWith(MockitoExtension.class)
 class FlightCrudServiceTest {
 

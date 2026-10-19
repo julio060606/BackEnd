@@ -13,15 +13,21 @@ Patrón obligatorio:
 
 ---
 
-## 🗺️ Mapa de Scripts de Migración Previstos
-
-| Archivo de Migración | Sprint | Descripción |
+## 🗺️ Mapa de Scripts de Migración Actuales
+ 
+| Archivo de Migración | Estado | Descripción |
 | :--- | :--- | :--- |
-| `V1__init_schema_airports_and_airlines.sql` | Sprint 2 | Creación de tablas de aeropuertos, aerolíneas e inserción de catálogos base. |
-| `V2__init_schema_users_and_auth.sql` | Sprint 2 | Creación de tabla `users` y roles iniciales. |
-| `V3__init_schema_flights.sql` | Sprint 2 | Creación de tabla `flights`, constraints e índices de búsqueda. |
-| `V4__init_schema_trips_and_notifications.sql` | Sprint 3 | Creación de tablas `user_trips`, `notifications_queue` e índices. |
-| `V5__seed_initial_flight_data.sql` | Sprint 2/3 | Carga de datos de prueba para vuelos nacionales e internacionales. |
+| `V1__create_tables.sql` | Implementado | DDL completo: extensiones pgcrypto, tablas `users`, `airports`, `airlines`, `flights`, `user_trips`, `notifications_queue` e índices. |
+| `V2__seed_initial_data.sql` | Implementado | Carga inicial de usuarios administradores, catálogo de 7 aeropuertos comerciales en Perú (IATA), aerolíneas y vuelos representativos. |
+
+---
+
+## 🛠️ Procedimiento de Verificación Local (Módulo Aeropuertos)
+1. Iniciar el servicio PostgreSQL con la base de datos `chasquifly`.
+2. Ejecutar la aplicación Spring Boot: `./mvnw spring-boot:run`. Flyway aplicará automáticamente `V1` y `V2`.
+3. Consultar el endpoint público: `GET http://localhost:8080/api/v1/airports`.
+4. Consultar un aeropuerto específico por código IATA: `GET http://localhost:8080/api/v1/airports/LIM`.
+5. Verificar respuesta HTTP 200 con el payload JSON correspondiente o HTTP 404 para códigos inexistentes.
 
 ---
 

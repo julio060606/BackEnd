@@ -1,4 +1,4 @@
-package com.chasquifly.exception;
+﻿package com.chasquifly.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -15,6 +15,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
+/**
+ * Manejador global centralizado de excepciones para la API REST.
+ * Intercepta fallos de validacion, errores de autenticacion y recursos no encontrados.
+ * 
+ * @author SamuelHuamanHuillca
+ */
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
