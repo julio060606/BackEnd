@@ -11,12 +11,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Implementación de {@link AirportService} que interactúa con la capa de persistencia
+ * a través de {@link AirportRepository}.
+ */
 @Service
 @RequiredArgsConstructor
 public class AirportServiceImpl implements AirportService {
 
     private final AirportRepository airportRepository;
 
+    /**
+     * Consulta y mapea todos los aeropuertos a formato DTO de forma transaccional de solo lectura.
+     */
     @Override
     @Transactional(readOnly = true)
     public List<AirportDto> getAllAirports() {
@@ -25,6 +32,10 @@ public class AirportServiceImpl implements AirportService {
                 .toList();
     }
 
+    /**
+     * Localiza un aeropuerto por código IATA ignorando mayúsculas/minúsculas.
+     * En caso de no existir, dispara una excepción {@link ResourceNotFoundException}.
+     */
     @Override
     @Transactional(readOnly = true)
     public AirportDto getAirportByIataCode(String iataCode) {
@@ -33,6 +44,9 @@ public class AirportServiceImpl implements AirportService {
         return mapToDto(airport);
     }
 
+    /**
+     * Transforma una entidad persistente {@link Airport} en su representación {@link AirportDto}.
+     */
     private AirportDto mapToDto(Airport airport) {
         return AirportDto.builder()
                 .id(airport.getId())
