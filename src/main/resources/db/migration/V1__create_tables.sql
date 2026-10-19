@@ -21,21 +21,23 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 -- 2. Table: airports
+-- Cataloga los terminales aéreos con código IATA estandarizado (3 letras)
 CREATE TABLE IF NOT EXISTS airports (
     id SERIAL PRIMARY KEY,
-    iata_code VARCHAR(3) NOT NULL UNIQUE,
-    name VARCHAR(150) NOT NULL,
-    city VARCHAR(100) NOT NULL,
-    country VARCHAR(100) NOT NULL,
-    timezone VARCHAR(50) NOT NULL DEFAULT 'America/Lima'
+    iata_code VARCHAR(3) NOT NULL UNIQUE,       -- Código único internacional IATA (ej. LIM, CUZ)
+    name VARCHAR(150) NOT NULL,                 -- Nombre oficial del aeropuerto
+    city VARCHAR(100) NOT NULL,                 -- Ciudad donde opera
+    country VARCHAR(100) NOT NULL,              -- País de ubicación (Perú por defecto en catálogos iniciales)
+    timezone VARCHAR(50) NOT NULL DEFAULT 'America/Lima' -- Zona horaria estándar para conversiones de itinerarios
 );
 
 -- 3. Table: airlines
+-- Entidad de aerolíneas comerciales asociadas a los itinerarios de vuelo
 CREATE TABLE IF NOT EXISTS airlines (
     id SERIAL PRIMARY KEY,
-    iata_code VARCHAR(2) NOT NULL UNIQUE,
-    name VARCHAR(100) NOT NULL,
-    logo_url VARCHAR(255)
+    iata_code VARCHAR(2) NOT NULL UNIQUE,       -- Código IATA de 2 caracteres (ej. LA, H2, JA)
+    name VARCHAR(100) NOT NULL,                 -- Razón social o nombre comercial
+    logo_url VARCHAR(255)                       -- Enlace o ruta al isotipo/logotipo
 );
 
 -- 4. Table: flights
