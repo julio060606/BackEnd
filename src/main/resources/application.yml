@@ -7,7 +7,7 @@ spring:
     validate-on-migrate: ${SPRING_FLYWAY_VALIDATE_ON_MIGRATE:false}
 
 server:
-  port: ${SERVER_PORT:8080}
+  port: ${PORT:${SERVER_PORT:8080}}
   error:
     include-message: always
     include-binding-errors: always
