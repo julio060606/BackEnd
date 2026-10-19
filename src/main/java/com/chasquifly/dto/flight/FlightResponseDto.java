@@ -11,6 +11,10 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+/**
+ * DTO de respuesta que representa los detalles completos de un vuelo comercial,
+ * incluyendo aerolínea operadora, aeropuertos de origen/destino y tarifas.
+ */
 @Data
 @Builder
 @NoArgsConstructor
