@@ -19,7 +19,7 @@ app:
     expiration-ms: ${JWT_EXPIRATION_MS:86400000} # 24 hours
     refresh-expiration-ms: ${JWT_REFRESH_EXPIRATION_MS:604800000} # 7 days
   cors:
-    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000,https://chasquifly.vercel.app}
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000,https://*.vercel.app,https://chasquifly.vercel.app}
   cache:
     enabled: false
   duffel:
