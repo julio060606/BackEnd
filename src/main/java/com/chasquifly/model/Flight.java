@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+/**
+ * Entidad JPA que representa un vuelo indexado con su tarifa base, horarios y estado operativo.
+ */
 @Entity
 @Table(name = "flights")
 @Getter
@@ -23,14 +26,17 @@ public class Flight {
     @Column(name = "flight_number", nullable = false, length = 20)
     private String flightNumber;
 
+    /** Aerolínea operadora del vuelo (relación N:1). */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "airline_id", nullable = false)
     private Airline airline;
 
+    /** Aeropuerto de salida (relación N:1). */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "origin_airport_id", nullable = false)
     private Airport originAirport;
 
+    /** Aeropuerto de llegada (relación N:1). */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "destination_airport_id", nullable = false)
     private Airport destinationAirport;

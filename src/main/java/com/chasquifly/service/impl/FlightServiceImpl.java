@@ -68,6 +68,9 @@ public class FlightServiceImpl implements FlightService {
                 .toList();
     }
 
+    /**
+     * Consulta un vuelo por su UUID o lanza ResourceNotFoundException si no existe.
+     */
     @Override
     @Transactional(readOnly = true)
     public FlightResponseDto getFlightById(UUID flightId) {
@@ -76,6 +79,9 @@ public class FlightServiceImpl implements FlightService {
         return mapToFlightDto(flight);
     }
 
+    /**
+     * Registra un nuevo vuelo validando previamente la existencia de la aerolínea y los aeropuertos.
+     */
     @Override
     @Transactional
     public FlightResponseDto createFlight(CreateFlightDto dto) {
@@ -108,6 +114,9 @@ public class FlightServiceImpl implements FlightService {
         return mapToFlightDto(savedFlight);
     }
 
+    /**
+     * Actualiza los datos e itinerario de un vuelo existente por su UUID.
+     */
     @Override
     @Transactional
     public FlightResponseDto updateFlight(UUID flightId, CreateFlightDto dto) {
@@ -141,6 +150,9 @@ public class FlightServiceImpl implements FlightService {
         return mapToFlightDto(updatedFlight);
     }
 
+    /**
+     * Elimina un vuelo del sistema verificando previamente su existencia en la base de datos.
+     */
     @Override
     @Transactional
     public void deleteFlight(UUID flightId) {
