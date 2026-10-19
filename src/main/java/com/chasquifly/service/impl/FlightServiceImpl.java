@@ -176,6 +176,7 @@ public class FlightServiceImpl implements FlightService {
     @Override
     @Transactional(readOnly = true)
     public List<FlightResponseDto> getPopularDestinations() {
+        // Limitar a los primeros 6 vuelos disponibles para la sección de ofertas
         return flightRepository.findAll().stream()
                 .limit(6)
                 .map(this::mapToFlightDto)
@@ -185,13 +186,14 @@ public class FlightServiceImpl implements FlightService {
     @Override
     @Transactional(readOnly = true)
     public FlightResponseDto getAiRecommendation(String prompt) {
-        // Find best flight: lowest price or highest availability
+        // Seleccionar el vuelo más económico disponible como recomendación inteligente
         return flightRepository.findAll().stream()
                 .min(Comparator.comparing(Flight::getBasePrice))
                 .map(this::mapToFlightDto)
                 .orElse(null);
     }
 
+    // Mapear entidad Flight a su DTO de respuesta desacoplado
     private FlightResponseDto mapToFlightDto(Flight flight) {
         return FlightResponseDto.builder()
                 .flightId(flight.getId())
