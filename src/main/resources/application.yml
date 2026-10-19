@@ -1,9 +1,13 @@
-spring:
+﻿spring:
   application:
     name: chasquifly-backend
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:dev}
 
+# ===================================================================
+# Configuracion Base de Seguridad, Base de Datos y Parametros JWT (US01)
+# Tiempos de expiracion (24h access / 7d refresh) y perfiles de entorno
+# ===================================================================
 server:
   port: ${SERVER_PORT:8080}
   error:
