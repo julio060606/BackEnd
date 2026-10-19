@@ -19,6 +19,10 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Suite de pruebas unitarias para {@link AirportServiceImpl}.
+ * Valida la lógica de negocio, mapeos a DTO y manejo de excepciones con Mockito.
+ */
 @ExtendWith(MockitoExtension.class)
 class AirportServiceTest {
 
@@ -52,6 +56,9 @@ class AirportServiceTest {
                 .build();
     }
 
+    /**
+     * Valida que el servicio consulte la totalidad de aeropuertos del repositorio y los mapee a DTO.
+     */
     @Test
     @DisplayName("Debe listar todos los aeropuertos registrados correctamente")
     void testGetAllAirports_Success() {
@@ -69,6 +76,9 @@ class AirportServiceTest {
         verify(airportRepository, times(1)).findAll();
     }
 
+    /**
+     * Valida la búsqueda exitosa por código IATA tolerando minúsculas y mayúsculas.
+     */
     @Test
     @DisplayName("Debe obtener un aeropuerto por su código IATA existente de forma insensible a mayúsculas")
     void testGetAirportByIataCode_Success() {
@@ -84,6 +94,9 @@ class AirportServiceTest {
         verify(airportRepository, times(1)).findByIataCodeIgnoreCase("lim");
     }
 
+    /**
+     * Valida que se arroje ResourceNotFoundException si el código solicitado no está registrado.
+     */
     @Test
     @DisplayName("Debe lanzar ResourceNotFoundException si el código IATA no existe")
     void testGetAirportByIataCode_NotFound() {
