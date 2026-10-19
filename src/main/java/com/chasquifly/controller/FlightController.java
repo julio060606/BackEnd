@@ -39,6 +39,7 @@ public class FlightController {
         return ResponseEntity.ok(flightService.getFlightById(flightId));
     }
 
+    /** Endpoint administrativo (ROLE_ADMIN) para registrar un nuevo vuelo. */
     @PostMapping
     @Operation(summary = "Crear nuevo vuelo (Admin)", description = "Registra un nuevo vuelo en la base de datos")
     public ResponseEntity<FlightResponseDto> createFlight(@Valid @RequestBody CreateFlightDto dto) {
@@ -46,6 +47,7 @@ public class FlightController {
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
+    /** Endpoint administrativo (ROLE_ADMIN) para modificar un vuelo existente. */
     @PutMapping("/{flightId}")
     @Operation(summary = "Actualizar vuelo (Admin)", description = "Modifica los datos de un vuelo existente")
     public ResponseEntity<FlightResponseDto> updateFlight(
@@ -54,6 +56,7 @@ public class FlightController {
         return ResponseEntity.ok(flightService.updateFlight(flightId, dto));
     }
 
+    /** Endpoint administrativo (ROLE_ADMIN) para eliminar un vuelo por su UUID. */
     @DeleteMapping("/{flightId}")
     @Operation(summary = "Eliminar vuelo (Admin)", description = "Elimina un vuelo del sistema")
     public ResponseEntity<Void> deleteFlight(@PathVariable UUID flightId) {
