@@ -1,4 +1,4 @@
-﻿package com.chasquifly.security;
+package com.chasquifly.security;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

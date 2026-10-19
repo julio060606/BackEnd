@@ -1,4 +1,4 @@
-﻿package com.chasquifly.config;
+package com.chasquifly.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

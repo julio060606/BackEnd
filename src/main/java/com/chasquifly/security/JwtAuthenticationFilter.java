@@ -1,4 +1,4 @@
-﻿package com.chasquifly.security;
+package com.chasquifly.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

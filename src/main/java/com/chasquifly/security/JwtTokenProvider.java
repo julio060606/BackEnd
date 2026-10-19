@@ -1,4 +1,4 @@
-﻿package com.chasquifly.security;
+package com.chasquifly.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

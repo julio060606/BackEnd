@@ -1,4 +1,4 @@
-﻿package com.chasquifly.exception;
+package com.chasquifly.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;

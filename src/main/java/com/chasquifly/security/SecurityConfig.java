@@ -1,4 +1,4 @@
-﻿package com.chasquifly.security;
+package com.chasquifly.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

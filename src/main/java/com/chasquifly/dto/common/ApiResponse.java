@@ -1,4 +1,4 @@
-﻿package com.chasquifly.dto.common;
+package com.chasquifly.dto.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
