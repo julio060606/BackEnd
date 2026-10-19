@@ -44,8 +44,8 @@ public interface FlightRepository extends JpaRepository<Flight, UUID>, JpaSpecif
      * @return Lista de vuelos coincidentes.
      */
     @Query("SELECT f FROM Flight f " +
-           "WHERE (:originCode IS NULL OR LOWER(f.originAirport.iataCode) = LOWER(:originCode)) " +
-           "AND (:destCode IS NULL OR LOWER(f.destinationAirport.iataCode) = LOWER(:destCode)) " +
+           "WHERE (cast(:originCode as string) IS NULL OR UPPER(f.originAirport.iataCode) = UPPER(cast(:originCode as string))) " +
+           "AND (cast(:destCode as string) IS NULL OR UPPER(f.destinationAirport.iataCode) = UPPER(cast(:destCode as string))) " +
            "AND (cast(:startDate as timestamp) IS NULL OR f.departureTime >= :startDate) " +
            "AND (cast(:endDate as timestamp) IS NULL OR f.departureTime <= :endDate) " +
            "ORDER BY f.basePrice ASC")

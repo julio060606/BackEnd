@@ -33,7 +33,7 @@ public class FlightController {
      * @param criteria Parámetros de consulta (origen, destino, fecha, precios, escalas, aerolínea).
      * @return Lista de vuelos coincidentes.
      */
-    @GetMapping("/search")
+    @GetMapping({"", "/search"})
     @Operation(summary = "Buscar vuelos con filtros multicriterio", description = "Permite filtrar por origen, destino, fechas, precios máximos, aerolíneas y escalas")
     public ResponseEntity<List<FlightResponseDto>> searchFlights(@ModelAttribute FlightSearchCriteria criteria) {
         return ResponseEntity.ok(flightService.searchFlights(criteria));
