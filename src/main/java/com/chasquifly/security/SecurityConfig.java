@@ -1,4 +1,4 @@
-package com.chasquifly.security;
+﻿package com.chasquifly.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +21,12 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
+/**
+ * Configuracion principal de seguridad Web de Spring Security 6.
+ * Define la cadena de filtros, politica stateless, proteccion CSRF y reglas de autorizacion HTTP.
+ * 
+ * @author SamuelHuamanHuillca
+ */
 public class SecurityConfig {
 
     private final JwtAuthenticationEntryPoint unauthorizedHandler;

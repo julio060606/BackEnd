@@ -1,4 +1,4 @@
-package com.chasquifly.security;
+﻿package com.chasquifly.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -13,6 +13,12 @@ import java.util.Date;
 
 @Component
 @Slf4j
+/**
+ * Proveedor de servicios criptograficos para la emision y verificacion de tokens JWT.
+ * Administra la firma con HMAC-SHA256, extraccion de claims y ciclo de vida de sesiones.
+ * 
+ * @author SamuelHuamanHuillca
+ */
 public class JwtTokenProvider {
 
     @Value("${app.jwt.secret:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}")

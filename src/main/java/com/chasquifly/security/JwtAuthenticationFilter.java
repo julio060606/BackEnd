@@ -1,4 +1,4 @@
-package com.chasquifly.security;
+﻿package com.chasquifly.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,6 +20,12 @@ import java.io.IOException;
 @Component
 @Slf4j
 @RequiredArgsConstructor
+/**
+ * Filtro de seguridad por peticion (OncePerRequestFilter) para validar tokens JWT.
+ * Extrae el Bearer token de las cabeceras HTTP y establece la autenticacion en el SecurityContext.
+ * 
+ * @author SamuelHuamanHuillca
+ */
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider tokenProvider;

@@ -1,4 +1,4 @@
-spring:
+﻿spring:
   application:
     name: chasquifly-backend
   profiles:
@@ -6,6 +6,10 @@ spring:
   flyway:
     validate-on-migrate: ${SPRING_FLYWAY_VALIDATE_ON_MIGRATE:false}
 
+# ===================================================================
+# Configuracion Base de Seguridad, Base de Datos y Parametros JWT (US01)
+# Tiempos de expiracion (24h access / 7d refresh) y perfiles de entorno
+# ===================================================================
 server:
   port: ${PORT:${SERVER_PORT:8080}}
   error:
