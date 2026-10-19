@@ -9,6 +9,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+/**
+ * DTO que encapsula los parámetros y filtros de búsqueda multicriterio de vuelos
+ * para el endpoint GET /api/v1/flights/search.
+ */
 @Data
 @Builder
 @NoArgsConstructor

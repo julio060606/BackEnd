@@ -37,11 +37,13 @@ public class FlightServiceImpl implements FlightService {
         OffsetDateTime startDate = null;
         OffsetDateTime endDate = null;
 
+        // Normalizar fecha de salida al rango UTC completo del día
         if (criteria.getDepartureDate() != null) {
             startDate = criteria.getDepartureDate().atStartOfDay().atOffset(ZoneOffset.UTC);
             endDate = criteria.getDepartureDate().atTime(23, 59, 59).atOffset(ZoneOffset.UTC);
         }
 
+        // Consulta en base de datos por origen, destino y rango de fechas
         List<Flight> flights = flightRepository.searchFlights(
                 criteria.getOrigin(),
                 criteria.getDestination(),
@@ -49,17 +51,7 @@ public class FlightServiceImpl implements FlightService {
                 endDate
         );
 
-        // Si no se encuentran vuelos en la fecha exacta, retornar los vuelos disponibles para esa ruta (búsqueda flexible)
-        if (flights.isEmpty() && criteria.getOrigin() != null && criteria.getDestination() != null) {
-            flights = flightRepository.searchFlights(
-                    criteria.getOrigin(),
-                    criteria.getDestination(),
-                    null,
-                    null
-            );
-        }
-
-        // Apply in-memory secondary filters if provided
+        // Filtros secundarios en memoria (precio, aerolínea y escalas) y mapeo a DTO
         return flights.stream()
                 .filter(f -> criteria.getMaxPrice() == null || f.getBasePrice().compareTo(criteria.getMaxPrice()) <= 0)
                 .filter(f -> criteria.getAirlineId() == null || f.getAirline().getId().equals(criteria.getAirlineId()))
@@ -196,6 +188,7 @@ public class FlightServiceImpl implements FlightService {
     @Override
     @Transactional(readOnly = true)
     public List<FlightResponseDto> getPopularDestinations() {
+        // Limitar a los primeros 6 vuelos disponibles para la sección de ofertas
         return flightRepository.findAll().stream()
                 .limit(6)
                 .map(this::mapToFlightDto)
@@ -205,13 +198,14 @@ public class FlightServiceImpl implements FlightService {
     @Override
     @Transactional(readOnly = true)
     public FlightResponseDto getAiRecommendation(String prompt) {
-        // Find best flight: lowest price or highest availability
+        // Seleccionar el vuelo más económico disponible como recomendación inteligente
         return flightRepository.findAll().stream()
                 .min(Comparator.comparing(Flight::getBasePrice))
                 .map(this::mapToFlightDto)
                 .orElse(null);
     }
 
+    // Mapear entidad Flight a su DTO de respuesta desacoplado
     private FlightResponseDto mapToFlightDto(Flight flight) {
         return FlightResponseDto.builder()
                 .flightId(flight.getId())
