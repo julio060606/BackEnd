@@ -150,6 +150,9 @@ public class FlightServiceImpl implements FlightService {
         return mapToFlightDto(updatedFlight);
     }
 
+    /**
+     * Elimina un vuelo del sistema verificando previamente su existencia en la base de datos.
+     */
     @Override
     @Transactional
     public void deleteFlight(UUID flightId) {
