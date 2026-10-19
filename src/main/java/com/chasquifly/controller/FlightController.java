@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Controlador REST para la búsqueda, comparación y gestión de vuelos.
+ */
 @RestController
 @RequestMapping("/api/v1/flights")
 @RequiredArgsConstructor
@@ -24,6 +27,12 @@ public class FlightController {
 
     private final FlightService flightService;
 
+    /**
+     * Búsqueda multicriterio de vuelos con filtros dinámicos.
+     *
+     * @param criteria Parámetros de consulta (origen, destino, fecha, precios, escalas, aerolínea).
+     * @return Lista de vuelos coincidentes.
+     */
     @GetMapping("/search")
     @Operation(summary = "Buscar vuelos con filtros multicriterio", description = "Permite filtrar por origen, destino, fechas, precios máximos, aerolíneas y escalas")
     public ResponseEntity<List<FlightResponseDto>> searchFlights(@ModelAttribute FlightSearchCriteria criteria) {
