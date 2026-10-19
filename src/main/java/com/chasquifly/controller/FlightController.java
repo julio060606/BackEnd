@@ -30,6 +30,9 @@ public class FlightController {
         return ResponseEntity.ok(flightService.searchFlights(criteria));
     }
 
+    /**
+     * Consulta pública del detalle completo de un vuelo por su UUID.
+     */
     @GetMapping("/{flightId}")
     @Operation(summary = "Obtener detalle de vuelo", description = "Obtiene información detallada de un vuelo por su UUID")
     public ResponseEntity<FlightResponseDto> getFlightById(@PathVariable UUID flightId) {
