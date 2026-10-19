@@ -37,11 +37,13 @@ public class FlightServiceImpl implements FlightService {
         OffsetDateTime startDate = null;
         OffsetDateTime endDate = null;
 
+        // Normalizar fecha de salida al rango UTC completo del día
         if (criteria.getDepartureDate() != null) {
             startDate = criteria.getDepartureDate().atStartOfDay().atOffset(ZoneOffset.UTC);
             endDate = criteria.getDepartureDate().atTime(23, 59, 59).atOffset(ZoneOffset.UTC);
         }
 
+        // Consulta en base de datos por origen, destino y rango de fechas
         List<Flight> flights = flightRepository.searchFlights(
                 criteria.getOrigin(),
                 criteria.getDestination(),
@@ -49,7 +51,7 @@ public class FlightServiceImpl implements FlightService {
                 endDate
         );
 
-        // Apply in-memory secondary filters if provided
+        // Filtros secundarios en memoria (precio, aerolínea y escalas) y mapeo a DTO
         return flights.stream()
                 .filter(f -> criteria.getMaxPrice() == null || f.getBasePrice().compareTo(criteria.getMaxPrice()) <= 0)
                 .filter(f -> criteria.getAirlineId() == null || f.getAirline().getId().equals(criteria.getAirlineId()))
