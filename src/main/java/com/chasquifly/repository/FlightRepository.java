@@ -12,13 +12,37 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Repositorio JPA para la entidad Flight con consultas optimizadas de búsqueda y tableros en vivo.
+ */
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, UUID>, JpaSpecificationExecutor<Flight> {
 
+    /**
+     * Busca un vuelo por su código de vuelo ignorando mayúsculas y minúsculas.
+     *
+     * @param flightNumber Código comercial del vuelo (ej. "LA2040").
+     * @return Vuelo encontrado o vacío.
+     */
     Optional<Flight> findByFlightNumberIgnoreCase(String flightNumber);
 
+    /**
+     * Recupera vuelos por estado operativo.
+     *
+     * @param status Estado operativo del vuelo.
+     * @return Lista de vuelos en el estado indicado.
+     */
     List<Flight> findByStatus(String status);
 
+    /**
+     * Búsqueda multicriterio de vuelos con filtros opcionales de ruta y fecha ordenados por precio ascendente.
+     *
+     * @param originCode Código IATA del origen (opcional).
+     * @param destCode   Código IATA del destino (opcional).
+     * @param startDate  Inicio del rango de salida UTC (opcional).
+     * @param endDate    Fin del rango de salida UTC (opcional).
+     * @return Lista de vuelos coincidentes.
+     */
     @Query("SELECT f FROM Flight f " +
            "WHERE (:originCode IS NULL OR LOWER(f.originAirport.iataCode) = LOWER(:originCode)) " +
            "AND (:destCode IS NULL OR LOWER(f.destinationAirport.iataCode) = LOWER(:destCode)) " +
@@ -32,11 +56,23 @@ public interface FlightRepository extends JpaRepository<Flight, UUID>, JpaSpecif
             @Param("endDate") OffsetDateTime endDate
     );
 
+    /**
+     * Consulta vuelos de salida desde un aeropuerto para el tablero FIDS en vivo.
+     *
+     * @param airportCode Código IATA del aeropuerto de origen.
+     * @return Lista de vuelos de salida ordenados por hora de despegue.
+     */
     @Query("SELECT f FROM Flight f " +
            "WHERE LOWER(f.originAirport.iataCode) = LOWER(:airportCode) " +
            "ORDER BY f.departureTime ASC")
     List<Flight> findLiveDepartures(@Param("airportCode") String airportCode);
 
+    /**
+     * Consulta vuelos de llegada a un aeropuerto para el tablero FIDS en vivo.
+     *
+     * @param airportCode Código IATA del aeropuerto de destino.
+     * @return Lista de vuelos de llegada ordenados por hora de aterrizaje.
+     */
     @Query("SELECT f FROM Flight f " +
            "WHERE LOWER(f.destinationAirport.iataCode) = LOWER(:airportCode) " +
            "ORDER BY f.arrivalTime ASC")
