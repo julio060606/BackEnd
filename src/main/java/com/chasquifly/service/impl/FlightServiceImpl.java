@@ -114,6 +114,9 @@ public class FlightServiceImpl implements FlightService {
         return mapToFlightDto(savedFlight);
     }
 
+    /**
+     * Actualiza los datos e itinerario de un vuelo existente por su UUID.
+     */
     @Override
     @Transactional
     public FlightResponseDto updateFlight(UUID flightId, CreateFlightDto dto) {
