@@ -79,6 +79,9 @@ public class FlightServiceImpl implements FlightService {
         return mapToFlightDto(flight);
     }
 
+    /**
+     * Registra un nuevo vuelo validando previamente la existencia de la aerolínea y los aeropuertos.
+     */
     @Override
     @Transactional
     public FlightResponseDto createFlight(CreateFlightDto dto) {
