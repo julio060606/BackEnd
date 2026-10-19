@@ -73,12 +73,23 @@ public class FlightController {
         return ResponseEntity.ok(flightService.compareFlights(flightIds));
     }
 
+    /**
+     * Obtiene una selección de ofertas y destinos populares para la página de inicio.
+     *
+     * @return Lista de vuelos destacados.
+     */
     @GetMapping("/popular-destinations")
     @Operation(summary = "Destinos y ofertas populares", description = "Retorna una selección de vuelos destacados para la pantalla de inicio")
     public ResponseEntity<List<FlightResponseDto>> getPopularDestinations() {
         return ResponseEntity.ok(flightService.getPopularDestinations());
     }
 
+    /**
+     * Retorna una recomendación inteligente de vuelo basada en mejor relación calidad-precio.
+     *
+     * @param prompt Preferencias opcionales del usuario.
+     * @return Vuelo recomendado.
+     */
     @GetMapping("/ai-recommendation")
     @Operation(summary = "Recomendación asistida por IA", description = "Genera una recomendación inteligente basada en mejor relación calidad-precio")
     public ResponseEntity<FlightResponseDto> getAiRecommendation(@RequestParam(required = false) String prompt) {
