@@ -51,6 +51,16 @@ public class FlightServiceImpl implements FlightService {
                 endDate
         );
 
+        // Búsqueda flexible: Si no hay vuelos en la fecha exacta, retornar los vuelos disponibles para esa ruta
+        if (flights.isEmpty() && criteria.getOrigin() != null && criteria.getDestination() != null) {
+            flights = flightRepository.searchFlights(
+                    criteria.getOrigin(),
+                    criteria.getDestination(),
+                    null,
+                    null
+            );
+        }
+
         // Filtros secundarios en memoria (precio, aerolínea y escalas) y mapeo a DTO
         return flights.stream()
                 .filter(f -> criteria.getMaxPrice() == null || f.getBasePrice().compareTo(criteria.getMaxPrice()) <= 0)
