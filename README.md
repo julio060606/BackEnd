@@ -2,6 +2,12 @@
 
 Backend oficial del indexador y comparador de vuelos **ChasquiFly**, desarrollado para el **Avance de Proyecto Final 2 (APF2)**.
 
+Credenciales de Prueba:
+Correo: goku123@xdxdxd.com
+Contraseña: Goku123456
+
+Puede registrarse en la plataforma si hay algún inconveniente
+
 ---
 
 ## 🏛️ Arquitectura y Tecnologías
