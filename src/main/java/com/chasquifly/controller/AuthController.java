@@ -6,6 +6,10 @@ import com.chasquifly.dto.auth.RefreshTokenRequest;
 import com.chasquifly.dto.auth.RegisterRequest;
 import com.chasquifly.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +27,14 @@ public class AuthController {
 
     @PostMapping("/register")
     @Operation(summary = "Registrar nuevo usuario", description = "Crea una nueva cuenta de usuario y retorna el token JWT")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Usuario creado exitosamente",
+            content = @Content(schema = @Schema(implementation = AuthResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Datos de registro inválidos o email ya registrado",
+            content = @Content(schema = @Schema())),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor",
+            content = @Content(schema = @Schema()))
+    })
     public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
         AuthResponse response = authService.register(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -30,6 +42,14 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(summary = "Iniciar sesión", description = "Autentica con email y contraseña, retornando tokens JWT")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Autenticación exitosa — retorna accessToken y refreshToken",
+            content = @Content(schema = @Schema(implementation = AuthResponse.class))),
+        @ApiResponse(responseCode = "401", description = "Credenciales incorrectas (email o contraseña inválida)",
+            content = @Content(schema = @Schema())),
+        @ApiResponse(responseCode = "400", description = "Cuerpo de la petición inválido",
+            content = @Content(schema = @Schema()))
+    })
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
         AuthResponse response = authService.login(request);
         return ResponseEntity.ok(response);
@@ -37,6 +57,14 @@ public class AuthController {
 
     @PostMapping("/refresh")
     @Operation(summary = "Refrescar token JWT", description = "Genera un nuevo access token utilizando un refresh token válido")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Token renovado exitosamente",
+            content = @Content(schema = @Schema(implementation = AuthResponse.class))),
+        @ApiResponse(responseCode = "401", description = "Refresh token expirado o inválido",
+            content = @Content(schema = @Schema())),
+        @ApiResponse(responseCode = "400", description = "Cuerpo de la petición inválido",
+            content = @Content(schema = @Schema()))
+    })
     public ResponseEntity<AuthResponse> refreshToken(@Valid @RequestBody RefreshTokenRequest request) {
         AuthResponse response = authService.refreshToken(request);
         return ResponseEntity.ok(response);

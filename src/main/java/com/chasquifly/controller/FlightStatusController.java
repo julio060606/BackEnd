@@ -3,6 +3,11 @@ package com.chasquifly.controller;
 import com.chasquifly.dto.flight.FlightResponseDto;
 import com.chasquifly.service.FlightStatusService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +25,12 @@ public class FlightStatusController {
 
     @GetMapping("/live")
     @Operation(summary = "Tablero FIDS en tiempo real", description = "Lista salidas (DEPARTURES) o llegadas (ARRIVALS) para un aeropuerto específico")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Tablero FIDS: lista de salidas o llegadas en tiempo real",
+            content = @Content(array = @ArraySchema(schema = @Schema(implementation = FlightResponseDto.class)))),
+        @ApiResponse(responseCode = "400", description = "Parámetro 'type' inválido (use DEPARTURES o ARRIVALS)",
+            content = @Content(schema = @Schema()))
+    })
     public ResponseEntity<List<FlightResponseDto>> getLiveBoard(
             @RequestParam(required = false, defaultValue = "LIM") String airport,
             @RequestParam(required = false, defaultValue = "DEPARTURES") String type) {
@@ -28,6 +39,12 @@ public class FlightStatusController {
 
     @GetMapping("/track/{flightNumber}")
     @Operation(summary = "Seguimiento por número de vuelo", description = "Rastrea el estado actual, puerta y terminal de un vuelo por su código (ej. LA2040)")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Estado actual del vuelo (puerta, terminal, estado)",
+            content = @Content(schema = @Schema(implementation = FlightResponseDto.class))),
+        @ApiResponse(responseCode = "404", description = "Número de vuelo no encontrado en el sistema",
+            content = @Content(schema = @Schema()))
+    })
     public ResponseEntity<FlightResponseDto> trackFlight(@PathVariable String flightNumber) {
         return ResponseEntity.ok(flightStatusService.trackFlight(flightNumber));
     }

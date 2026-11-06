@@ -6,6 +6,10 @@ import com.chasquifly.dto.trip.TripResponseDto;
 import com.chasquifly.security.UserPrincipal;
 import com.chasquifly.service.TripService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -29,12 +33,26 @@ public class TripController {
 
     @GetMapping
     @Operation(summary = "Obtener mis viajes", description = "Lista todos los vuelos guardados por el usuario autenticado")
+    @ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Lista de viajes guardados del usuario",
+            content = @Content(array = @ArraySchema(schema = @Schema(implementation = TripResponseDto.class)))),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "No autenticado — se requiere Bearer Token",
+            content = @Content(schema = @Schema()))
+    })
     public ResponseEntity<List<TripResponseDto>> getUserTrips(@AuthenticationPrincipal UserPrincipal currentUser) {
         return ResponseEntity.ok(tripService.getUserTrips(currentUser.getId()));
     }
 
     @PostMapping
     @Operation(summary = "Guardar viaje", description = "Agrega un vuelo al itinerario personal del usuario")
+    @ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Viaje guardado exitosamente en el itinerario",
+            content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Datos del viaje inválidos",
+            content = @Content(schema = @Schema())),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "No autenticado — se requiere Bearer Token",
+            content = @Content(schema = @Schema()))
+    })
     public ResponseEntity<ApiResponse<TripResponseDto>> saveTrip(
             @AuthenticationPrincipal UserPrincipal currentUser,
             @Valid @RequestBody CreateTripDto dto) {
@@ -44,6 +62,14 @@ public class TripController {
 
     @DeleteMapping("/{tripId}")
     @Operation(summary = "Eliminar viaje guardado", description = "Remueve un viaje del itinerario del usuario")
+    @ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Viaje eliminado exitosamente",
+            content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "No autenticado — se requiere Bearer Token",
+            content = @Content(schema = @Schema())),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Viaje no encontrado o no pertenece al usuario",
+            content = @Content(schema = @Schema()))
+    })
     public ResponseEntity<ApiResponse<Void>> deleteTrip(
             @AuthenticationPrincipal UserPrincipal currentUser,
             @PathVariable UUID tripId) {

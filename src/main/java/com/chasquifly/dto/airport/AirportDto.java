@@ -1,5 +1,6 @@
 package com.chasquifly.dto.airport;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,35 +13,24 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(description = "Datos de catálogo de un aeropuerto")
 public class AirportDto {
 
-    /**
-     * Identificador del aeropuerto.
-     */
+    @Schema(description = "Identificador numérico del aeropuerto", example = "1")
     private Integer id;
 
-    /**
-     * Código IATA de 3 letras.
-     */
+    @Schema(description = "Código IATA de 3 letras", example = "LIM")
     private String iataCode;
 
-    /**
-     * Nombre descriptivo de la terminal.
-     */
+    @Schema(description = "Nombre descriptivo de la terminal", example = "Aeropuerto Internacional Jorge Chávez")
     private String name;
 
-    /**
-     * Ciudad sede.
-     */
+    @Schema(description = "Ciudad sede", example = "Lima")
     private String city;
 
-    /**
-     * País sede.
-     */
+    @Schema(description = "País sede", example = "Perú")
     private String country;
 
-    /**
-     * Zona horaria IANA del aeropuerto.
-     */
+    @Schema(description = "Zona horaria IANA del aeropuerto", example = "America/Lima")
     private String timezone;
 }
