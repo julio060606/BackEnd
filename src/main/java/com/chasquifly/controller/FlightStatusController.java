@@ -30,6 +30,13 @@ public class FlightStatusController {
     /** Servicio encargado de resolver tableros FIDS por aeropuerto y rastreo por código comercial. */
     private final FlightStatusService flightStatusService;
 
+    /**
+     * Expone el tablero FIDS en tiempo real filtrado por código IATA de aeropuerto y tipo de operación (RF-07).
+     *
+     * @param airport Código IATA del aeropuerto a consultar (por defecto {@code LIM}).
+     * @param type    Dirección operativa del tablero: {@code DEPARTURES} o {@code ARRIVALS}.
+     * @return Lista de vuelos activos en formato {@link FlightResponseDto}.
+     */
     @GetMapping("/live")
     @Operation(summary = "Tablero FIDS en tiempo real", description = "Lista salidas (DEPARTURES) o llegadas (ARRIVALS) para un aeropuerto específico")
     @ApiResponses({
