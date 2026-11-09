@@ -39,6 +39,12 @@ public class TripController {
     /** Servicio de negocio encargado de la persistencia y validación de viajes del usuario. */
     private final TripService tripService;
 
+    /**
+     * Consulta los viajes guardados en el itinerario del usuario autenticado (RF-09).
+     *
+     * @param currentUser Principal extraído del token JWT Bearer en el filtro stateless (RNF-02).
+     * @return Lista de viajes asociados al usuario con estado HTTP 200.
+     */
     @GetMapping
     @Operation(summary = "Obtener mis viajes", description = "Lista todos los vuelos guardados por el usuario autenticado")
     @ApiResponses({
@@ -51,6 +57,13 @@ public class TripController {
         return ResponseEntity.ok(tripService.getUserTrips(currentUser.getId()));
     }
 
+    /**
+     * Registra un vuelo seleccionado en el itinerario personal del usuario autenticado (RF-09).
+     *
+     * @param currentUser Usuario autenticado extraído desde el contexto de seguridad JWT.
+     * @param dto         Cuerpo validado con el UUID del vuelo, código de reserva y notas.
+     * @return Respuesta envolvente {@link ApiResponse} con estado HTTP 201 Created.
+     */
     @PostMapping
     @Operation(summary = "Guardar viaje", description = "Agrega un vuelo al itinerario personal del usuario")
     @ApiResponses({
