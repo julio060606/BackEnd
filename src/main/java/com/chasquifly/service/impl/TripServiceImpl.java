@@ -20,6 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Implementación de la capa de servicio para la gestión de itinerarios personales ({@code user_trips}).
+ * Garantiza transaccionalidad en operaciones de lectura/escritura y validación de propiedad por usuario (RF-09).
+ */
 @Service
 @RequiredArgsConstructor
 public class TripServiceImpl implements TripService {
@@ -29,6 +33,9 @@ public class TripServiceImpl implements TripService {
     private final FlightRepository flightRepository;
     private final FlightService flightService;
 
+    /**
+     * Recupera el itinerario completo del usuario autenticado ordenado por fecha de creación descendente.
+     */
     @Override
     @Transactional(readOnly = true)
     public List<TripResponseDto> getUserTrips(UUID userId) {
@@ -37,6 +44,10 @@ public class TripServiceImpl implements TripService {
                 .toList();
     }
 
+    /**
+     * Valida la existencia del usuario y del vuelo antes de persistir el viaje en {@code user_trips}.
+     * Lanza {@link ResourceNotFoundException} si alguno de los identificadores no existe en PostgreSQL.
+     */
     @Override
     @Transactional
     public TripResponseDto saveTrip(UUID userId, CreateTripDto dto) {
@@ -46,6 +57,7 @@ public class TripServiceImpl implements TripService {
         Flight flight = flightRepository.findById(dto.getFlightId())
                 .orElseThrow(() -> new ResourceNotFoundException("Vuelo no encontrado con ID: " + dto.getFlightId()));
 
+        // Construir entidad relacional asociando reserva y notas opcionales del pasajero
         UserTrip trip = UserTrip.builder()
                 .user(user)
                 .flight(flight)
@@ -57,12 +69,16 @@ public class TripServiceImpl implements TripService {
         return mapToTripDto(savedTrip);
     }
 
+    /**
+     * Elimina un viaje guardado verificando previamente la propiedad del usuario autenticado (RNF-02).
+     */
     @Override
     @Transactional
     public void deleteTrip(UUID userId, UUID tripId) {
         UserTrip trip = userTripRepository.findById(tripId)
                 .orElseThrow(() -> new ResourceNotFoundException("Viaje no encontrado con ID: " + tripId));
 
+        // Impedir eliminaciones cruzadas entre usuarios distintos (Security by Design)
         if (!trip.getUser().getId().equals(userId)) {
             throw new BadRequestException("No tiene permiso para eliminar este viaje");
         }
@@ -70,7 +86,11 @@ public class TripServiceImpl implements TripService {
         userTripRepository.delete(trip);
     }
 
+    /**
+     * Convierte la entidad {@link UserTrip} en un {@link TripResponseDto} enriquecido con los datos del vuelo.
+     */
     private TripResponseDto mapToTripDto(UserTrip trip) {
+        // Reutiliza el servicio de vuelos para hidratar aerolínea, aeropuertos y estado operativo actualizado
         FlightResponseDto flightDto = flightService.getFlightById(trip.getFlight().getId());
 
         return TripResponseDto.builder()
