@@ -22,13 +22,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Controlador REST para la gestión del itinerario personal ("Mis Viajes") del usuario autenticado.
+ * <p>
+ * Ruta base: {@code /api/v1/trips} (RF-09).
+ * Todos los endpoints exigen autenticación stateless mediante JWT Bearer ({@code BearerAuth}, RNF-02).
+ */
 @RestController
 @RequestMapping("/api/v1/trips")
 @RequiredArgsConstructor
 @Tag(name = "5. Mis Viajes", description = "Gestión de vuelos guardados y seguimiento del usuario")
+// Esquema OpenAPI BearerAuth aplicado a nivel de controlador para proteger los itinerarios privados
 @SecurityRequirement(name = "BearerAuth")
 public class TripController {
 
+    /** Servicio de negocio encargado de la persistencia y validación de viajes del usuario. */
     private final TripService tripService;
 
     @GetMapping
