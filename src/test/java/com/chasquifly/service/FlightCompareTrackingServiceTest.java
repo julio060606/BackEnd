@@ -30,9 +30,20 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * Suite de 6 pruebas unitarias JUnit 5 + Mockito para el módulo Integrante 6 (RNF-06).
+ * <p>
+ * Verifica de forma aislada (sin base de datos física) la lógica de negocio de:
+ * <ul>
+ *   <li>Comparador analítico de vuelos en {@link FlightServiceImpl} (RF-06).</li>
+ *   <li>Tablero FIDS y rastreo por código en {@link FlightStatusServiceImpl} (RF-07, RF-08).</li>
+ *   <li>Registro de itinerarios personales en {@link TripServiceImpl} (RF-09).</li>
+ * </ul>
+ */
 @ExtendWith(MockitoExtension.class)
 class FlightCompareTrackingServiceTest {
 
+    // --- Repositorios y colaboradores simulados mediante Mockito ---
     @Mock
     private FlightRepository flightRepository;
 
@@ -51,12 +62,14 @@ class FlightCompareTrackingServiceTest {
     @Mock
     private FlightService mockFlightService;
 
+    // --- Servicios bajo prueba (SUT) ---
     @InjectMocks
     private FlightServiceImpl flightService;
 
     private FlightStatusServiceImpl flightStatusService;
     private TripServiceImpl tripService;
 
+    // --- Fixtures compartidos entre escenarios de prueba ---
     private Flight flightA;
     private Flight flightB;
     private User sampleUser;
@@ -64,8 +77,12 @@ class FlightCompareTrackingServiceTest {
     private UUID flightBId;
     private UUID userId;
 
+    /**
+     * Inicializa los servicios FIDS/itinerarios y construye entidades de vuelo y usuario de prueba antes de cada caso.
+     */
     @BeforeEach
     void setUp() {
+        // Instanciación explícita con repositorios mockeados para aislar FlightStatusService y TripService
         flightStatusService = new FlightStatusServiceImpl(flightRepository, mockFlightService);
         tripService = new TripServiceImpl(userTripRepository, userRepository, flightRepository, mockFlightService);
 
@@ -73,10 +90,12 @@ class FlightCompareTrackingServiceTest {
         flightBId = UUID.randomUUID();
         userId = UUID.randomUUID();
 
+        // Catálogo maestro en memoria: aerolínea LATAM y ruta doméstica LIM -> CUZ
         Airline latam = Airline.builder().id(1).iataCode("LA").name("LATAM").build();
         Airport lim = Airport.builder().id(1).iataCode("LIM").name("Jorge Chávez").city("Lima").country("Perú").build();
         Airport cuz = Airport.builder().id(2).iataCode("CUZ").name("Velasco Astete").city("Cusco").country("Perú").build();
 
+        // Vuelo A: opción más económica ($50.00) y rápida (60 min)
         flightA = Flight.builder()
                 .id(flightAId)
                 .flightNumber("LA2040")
@@ -90,6 +109,7 @@ class FlightCompareTrackingServiceTest {
                 .status("SCHEDULED")
                 .build();
 
+        // Vuelo B: opción de mayor tarifa ($90.00) y duración (90 min) para validar métricas comparativas
         flightB = Flight.builder()
                 .id(flightBId)
                 .flightNumber("LA2042")
