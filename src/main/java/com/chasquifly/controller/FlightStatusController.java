@@ -51,6 +51,12 @@ public class FlightStatusController {
         return ResponseEntity.ok(flightStatusService.getLiveBoard(airport, type));
     }
 
+    /**
+     * Rastrea en tiempo real el estado operacional, puerta de embarque y terminal de un vuelo por código (RF-08).
+     *
+     * @param flightNumber Código comercial del vuelo (insensible a mayúsculas, ej. {@code LA2040}).
+     * @return Detalle actualizado del vuelo o HTTP 404 si el código no existe en base de datos.
+     */
     @GetMapping("/track/{flightNumber}")
     @Operation(summary = "Seguimiento por número de vuelo", description = "Rastrea el estado actual, puerta y terminal de un vuelo por su código (ej. LA2040)")
     @ApiResponses({

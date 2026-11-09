@@ -44,11 +44,17 @@ public class FlightStatusServiceImpl implements FlightStatusService {
                 .toList();
     }
 
+    /**
+     * Rastrea un vuelo individual mediante búsqueda insensible a mayúsculas por número de vuelo (RF-08).
+     * Retorna puerta, terminal y estado operativo actualizado o lanza {@link ResourceNotFoundException}.
+     */
     @Override
     @Transactional(readOnly = true)
     public FlightResponseDto trackFlight(String flightNumber) {
+        // Búsqueda indexada insensible a mayúsculas/minúsculas sobre el código comercial del vuelo
         Flight flight = flightRepository.findByFlightNumberIgnoreCase(flightNumber)
                 .orElseThrow(() -> new ResourceNotFoundException("Vuelo no encontrado con número: " + flightNumber));
+        // Delegar reconstrucción del DTO para exponer gate, terminal y horarios locales
         return flightService.getFlightById(flight.getId());
     }
 }
