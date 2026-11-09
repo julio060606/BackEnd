@@ -86,7 +86,11 @@ public class TripServiceImpl implements TripService {
         userTripRepository.delete(trip);
     }
 
+    /**
+     * Convierte la entidad {@link UserTrip} en un {@link TripResponseDto} enriquecido con los datos del vuelo.
+     */
     private TripResponseDto mapToTripDto(UserTrip trip) {
+        // Reutiliza el servicio de vuelos para hidratar aerolínea, aeropuertos y estado operativo actualizado
         FlightResponseDto flightDto = flightService.getFlightById(trip.getFlight().getId());
 
         return TripResponseDto.builder()
