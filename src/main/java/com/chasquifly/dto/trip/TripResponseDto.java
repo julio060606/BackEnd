@@ -29,12 +29,15 @@ public class TripResponseDto {
     @Schema(description = "Datos completos del vuelo asociado")
     private FlightResponseDto flight;
 
+    /** Código de reserva PNR o referencia alfanumérica ingresada por el usuario (máximo 50 caracteres). */
     @Schema(description = "Código de reserva o referencia interna", example = "CHASQ-84920")
     private String bookingReference;
 
+    /** Anotaciones o recordatorios personales vinculados al itinerario de viaje. */
     @Schema(description = "Notas personalizadas del usuario", example = "Viaje familiar de vacaciones")
     private String notes;
 
+    /** Marca temporal UTC de auditoría generada automáticamente al registrar el viaje. */
     @Schema(description = "Fecha de registro del viaje")
     private OffsetDateTime createdAt;
 }
