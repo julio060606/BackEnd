@@ -15,12 +15,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlador REST público para el tablero FIDS en vivo (RF-07) y seguimiento individual de vuelos (RF-08).
+ * <p>
+ * Ruta base: {@code /api/v1/flight-status}.
+ * Expone endpoints documentados bajo OpenAPI 3 (RNF-05) para consultas operativas de salidas, llegadas y puertas.
+ */
 @RestController
 @RequestMapping("/api/v1/flight-status")
 @RequiredArgsConstructor
 @Tag(name = "4. Estado y Seguimiento", description = "Tablero FIDS en vivo y seguimiento por número de vuelo")
 public class FlightStatusController {
 
+    /** Servicio encargado de resolver tableros FIDS por aeropuerto y rastreo por código comercial. */
     private final FlightStatusService flightStatusService;
 
     @GetMapping("/live")
