@@ -164,24 +164,32 @@ public class FlightServiceImpl implements FlightService {
         flightRepository.deleteById(flightId);
     }
 
+    /**
+     * Ejecuta el análisis comparativo multicriterio entre vuelos seleccionados (RF-06).
+     * Identifica la opción más económica, la más rápida, el promedio y el ahorro neto en {@link BigDecimal}.
+     */
     @Override
     @Transactional(readOnly = true)
     public FlightComparisonDto compareFlights(List<UUID> flightIds) {
         List<Flight> flights = flightRepository.findAllById(flightIds);
         if (flights.isEmpty()) {
+            // Retornar estructura vacía segura cuando no existen coincidencias para los UUID solicitados
             return FlightComparisonDto.builder().flights(List.of()).build();
         }
 
         List<FlightResponseDto> dtos = flights.stream().map(this::mapToFlightDto).toList();
 
+        // Identificar el vuelo de menor tarifa base y el de menor duración total en minutos
         Flight cheapest = flights.stream().min(Comparator.comparing(Flight::getBasePrice)).orElse(null);
         Flight fastest = flights.stream().min(Comparator.comparing(Flight::getDurationMinutes)).orElse(null);
 
+        // Calcular tarifa promedio exacta con BigDecimal y redondeo financiero HALF_UP a 2 decimales
         BigDecimal totalPrice = flights.stream()
                 .map(Flight::getBasePrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         BigDecimal averagePrice = totalPrice.divide(BigDecimal.valueOf(flights.size()), 2, RoundingMode.HALF_UP);
 
+        // Calcular brecha máxima de ahorro entre la tarifa más alta y la más económica
         BigDecimal maxPrice = flights.stream().map(Flight::getBasePrice).max(Comparator.naturalOrder()).orElse(BigDecimal.ZERO);
         BigDecimal minPrice = cheapest != null ? cheapest.getBasePrice() : BigDecimal.ZERO;
         BigDecimal priceDifference = maxPrice.subtract(minPrice);
