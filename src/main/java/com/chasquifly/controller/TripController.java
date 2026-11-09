@@ -81,6 +81,13 @@ public class TripController {
         return new ResponseEntity<>(ApiResponse.ok(created, "Viaje guardado exitosamente"), HttpStatus.CREATED);
     }
 
+    /**
+     * Elimina un viaje guardado del itinerario del usuario autenticado (RF-09).
+     *
+     * @param currentUser Principal del usuario dueño de la sesión JWT (RNF-02).
+     * @param tripId      UUID del viaje guardado que se desea remover.
+     * @return Respuesta de confirmación o error 400/404 si no existe o pertenece a otro usuario.
+     */
     @DeleteMapping("/{tripId}")
     @Operation(summary = "Eliminar viaje guardado", description = "Remueve un viaje del itinerario del usuario")
     @ApiResponses({
