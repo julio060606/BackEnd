@@ -14,6 +14,10 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Suite de pruebas unitarias para la integración externa con Duffel (RNF-06).
+ * Certifica las 7 pruebas de validación de credenciales, modo mock, límites y degradación elegante.
+ */
 class DuffelClientTest {
 
     private DuffelConfig config;
@@ -25,6 +29,7 @@ class DuffelClientTest {
         client = new DuffelClient(config);
     }
 
+    /** Prueba 1/7 (RNF-06): Certifica que isUsable() exija habilitación explícita y token no vacío. */
     @Test
     @DisplayName("DuffelConfig: isUsable() retorna true solo cuando enabled=true y apiToken no está vacío")
     void testDuffelConfigIsUsable() {
@@ -46,6 +51,7 @@ class DuffelClientTest {
         assertFalse(config.isUsable(), "Disabled con token no debe ser utilizable");
     }
 
+    /** Prueba 2/7 (RNF-06): Certifica la generación de ofertas simuladas coherentes en USD cuando mockEnabled=true. */
     @Test
     @DisplayName("DuffelClient: Cuando mockEnabled=true, retorna ofertas simuladas coherentes con la solicitud")
     void testSearchOffersWhenMockEnabledReturnsMockOffers() {
@@ -85,6 +91,7 @@ class DuffelClientTest {
         assertThat(third.getDestination()).isEqualTo("LIM");
     }
 
+    /** Prueba 3/7 (RNF-06): Certifica que el listado de ofertas respete la cota máxima maxOffers. */
     @Test
     @DisplayName("DuffelClient: mockEnabled respeta el límite maxOffers")
     void testSearchOffersWhenMockEnabledRespectsMaxOffers() {
@@ -102,6 +109,7 @@ class DuffelClientTest {
         assertThat(offers).hasSize(2);
     }
 
+    /** Prueba 4/7 (RNF-06): Certifica retorno de lista vacía sin llamadas de red cuando la integración está inactiva. */
     @Test
     @DisplayName("DuffelClient: Cuando !isUsable() (disabled o sin token), retorna lista vacía sin llamadas HTTP")
     void testSearchOffersWhenNotUsableReturnsEmptyList() {
@@ -124,6 +132,7 @@ class DuffelClientTest {
         assertThat(offersNoToken).isEmpty();
     }
 
+    /** Prueba 5/7 (RNF-06): Certifica prevención de NullPointerException ante parámetros de búsqueda nulos. */
     @Test
     @DisplayName("DuffelClient: Maneja solicitudes nulas de forma segura sin lanzar NullPointerException")
     void testSearchOffersWithNullRequest() {
@@ -135,6 +144,7 @@ class DuffelClientTest {
         assertThat(offers.get(0).getDestination()).isEqualTo("CUZ");
     }
 
+    /** Prueba 6/7 (RNF-06): Certifica degradación elegante ante caídas o timeouts sin arrojar HTTP 500. */
     @Test
     @DisplayName("DuffelClient: Ante fallos de conexión externa, captura el error y retorna lista vacía sin 500")
     void testSearchOffersGracefulDegradationOnFailure() {
@@ -159,6 +169,7 @@ class DuffelClientTest {
         });
     }
 
+    /** Prueba 7/7 (RNF-06): Certifica la delegación de llamadas desde DuffelService hacia DuffelClient. */
     @Test
     @DisplayName("DuffelService: Delega correctamente en DuffelClient")
     void testDuffelServiceDelegation() {
