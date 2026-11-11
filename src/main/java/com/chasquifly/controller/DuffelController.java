@@ -18,14 +18,23 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Controlador REST auxiliar para la búsqueda de ofertas de vuelos en el proveedor externo Duffel.
+ * Opera bajo diseño de degradación elegante (Graceful Degradation) y documentación OpenAPI 3 (RNF-05).
+ */
 @RestController
 @RequestMapping("/api/v1/flights/external")
 @RequiredArgsConstructor
 @Tag(name = "7. Duffel (externo)", description = "Ofertas del proveedor externo Duffel")
 public class DuffelController {
 
+    /** Servicio de negocio que encapsula la comunicación con el cliente HTTP de Duffel. */
     private final DuffelService duffelService;
 
+    /**
+     * Consulta ofertas externas según origen, destino, fecha de salida y cantidad de pasajeros.
+     * Si la integración está deshabilitada o presenta fallos de red, retorna una lista vacía (HTTP 200).
+     */
     @GetMapping("/search")
     @Operation(summary = "Buscar ofertas externas en Duffel",
                description = "Lista vacía si Duffel está deshabilitado o si su servicio se cayo")
