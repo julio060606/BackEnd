@@ -63,12 +63,15 @@ public class FlightResponseDto {
     @Schema(description = "Asientos disponibles", example = "42")
     private Integer availableSeats;
 
+    /** Estados documentados para vuelos: ON_TIME, DELAYED, BOARDING y CANCELLED. */
     @Schema(description = "Estado operativo del vuelo", example = "ON_TIME", allowableValues = {"ON_TIME", "DELAYED", "CANCELLED", "BOARDING"})
     private String status;
 
+    /** Puerta asignada desde la que se realiza el embarque. */
     @Schema(description = "Puerta de embarque", example = "B12")
     private String gate;
 
+    /** Terminal aeroportuaria asignada para el vuelo. */
     @Schema(description = "Terminal del aeropuerto", example = "T2")
     private String terminal;
 }
