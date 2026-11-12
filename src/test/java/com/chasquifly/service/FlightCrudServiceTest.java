@@ -29,6 +29,7 @@ import static org.mockito.Mockito.*;
 
 /**
  * Suite de pruebas unitarias para las operaciones CRUD de vuelos en FlightServiceImpl.
+ * Sus siete casos cubren consultas, creación, actualización y eliminación, incluidos escenarios no encontrados.
  */
 @ExtendWith(MockitoExtension.class)
 class FlightCrudServiceTest {
