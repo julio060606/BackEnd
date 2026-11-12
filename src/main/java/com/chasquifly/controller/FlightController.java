@@ -23,6 +23,8 @@ import java.util.UUID;
 
 /**
  * Controlador REST para la búsqueda, comparación y gestión de vuelos.
+ * El contrato CRUD responde con 200 al consultar o actualizar, 201 al crear y 204 al eliminar;
+ * 400 indica datos inválidos, 403 acceso denegado y 404 un vuelo inexistente.
  */
 @RestController
 @RequestMapping("/api/v1/flights")

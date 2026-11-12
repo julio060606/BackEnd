@@ -47,9 +47,11 @@ public class FlightResponseDto {
     @Schema(description = "Duración total del vuelo en minutos", example = "135")
     private Integer durationMinutes;
 
+    /** Cero escalas significa que el vuelo es directo. */
     @Schema(description = "Número de escalas (0 = directo)", example = "0")
     private Integer stopsCount;
 
+    /** La tarifa base del vuelo se expresa en dólares estadounidenses. */
     @Schema(description = "Precio base del vuelo en USD", example = "59.99")
     private BigDecimal basePrice;
 
@@ -57,15 +59,19 @@ public class FlightResponseDto {
     @Builder.Default
     private String currency = "USD";
 
+    /** Cantidad de plazas que siguen disponibles para reservar. */
     @Schema(description = "Asientos disponibles", example = "42")
     private Integer availableSeats;
 
+    /** Estados documentados para vuelos: ON_TIME, DELAYED, BOARDING y CANCELLED. */
     @Schema(description = "Estado operativo del vuelo", example = "ON_TIME", allowableValues = {"ON_TIME", "DELAYED", "CANCELLED", "BOARDING"})
     private String status;
 
+    /** Puerta asignada desde la que se realiza el embarque. */
     @Schema(description = "Puerta de embarque", example = "B12")
     private String gate;
 
+    /** Terminal aeroportuaria asignada para el vuelo. */
     @Schema(description = "Terminal del aeropuerto", example = "T2")
     private String terminal;
 }
