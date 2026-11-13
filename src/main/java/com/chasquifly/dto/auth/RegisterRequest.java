@@ -9,6 +9,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * DTO para la solicitud de registro de nuevos clientes ChasquiFly.
+ * Valida nombres, apellidos, formato de email unico y contrasena segura de al menos 8 caracteres.
+ */
 @Data
 @Builder
 @NoArgsConstructor
@@ -19,23 +23,28 @@ public class RegisterRequest {
     @NotBlank(message = "El nombre es obligatorio")
     @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres")
     @Schema(description = "Nombres del usuario", example = "Julio")
+    /** Nombres del usuario, longitud minima de 2 y maxima de 100 caracteres. */
     private String firstName;
 
     @NotBlank(message = "El apellido es obligatorio")
     @Size(min = 2, max = 100, message = "El apellido debe tener entre 2 y 100 caracteres")
     @Schema(description = "Apellidos del usuario", example = "Alvarez")
+    /** Apellidos del usuario, longitud minima de 2 y maxima de 100 caracteres. */
     private String lastName;
 
     @NotBlank(message = "El email es obligatorio")
     @Email(message = "Debe proporcionar un formato de email válido")
     @Schema(description = "Correo electrónico único", example = "julio@chasquifly.com")
+    /** Correo electronico que servira de identificador unico para el usuario. */
     private String email;
 
     @NotBlank(message = "La contraseña es obligatoria")
     @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
     @Schema(description = "Contraseña segura de mínimo 8 caracteres", example = "ChasquiSecure2024!")
+    /** Clave de acceso segura con minimo 8 caracteres antes de ser encriptada en base de datos. */
     private String password;
 
     @Schema(description = "Número telefónico de contacto", example = "+51987654321")
+    /** Numero telefonico de contacto internacional opcional (ej: +51). */
     private String phone;
 }

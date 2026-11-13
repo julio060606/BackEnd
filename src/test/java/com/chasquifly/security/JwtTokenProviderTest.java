@@ -50,6 +50,7 @@ class JwtTokenProviderTest {
 
     @Test
     @DisplayName("Debe generar un Access Token JWT válido y no nulo")
+    // Test 1: Generacion y validacion de Access Token JWT valido
     void testGenerateAccessToken() {
         String token = tokenProvider.generateAccessToken(authentication);
 
@@ -60,6 +61,7 @@ class JwtTokenProviderTest {
 
     @Test
     @DisplayName("Debe extraer correctamente el email/subject del token JWT")
+    // Test 2: Extraccion de username/subject desde los claims del token
     void testGetUsernameFromJwt() {
         String token = tokenProvider.generateAccessToken(authentication);
         String username = tokenProvider.getUsernameFromJwt(token);
@@ -69,6 +71,7 @@ class JwtTokenProviderTest {
 
     @Test
     @DisplayName("Debe validar que un token alterado o con firma incorrecta sea rechazado")
+    // Test 3: Rechazo de token alterado o con firma criptografica no valida
     void testValidateToken_InvalidSignature() {
         String token = tokenProvider.generateAccessToken(authentication);
         String tamperedToken = token + "corrupted";
@@ -78,6 +81,7 @@ class JwtTokenProviderTest {
 
     @Test
     @DisplayName("Debe generar un Refresh Token válido con claim subject correcto")
+    // Test 4: Generacion y verificacion de Refresh Token con subject asignado
     void testGenerateRefreshToken() {
         String refreshToken = tokenProvider.generateRefreshToken("test@chasquifly.com");
 
@@ -88,6 +92,7 @@ class JwtTokenProviderTest {
 
     @Test
     @DisplayName("Debe rechazar un token expirado")
+    // Test 5: Rechazo de token con tiempo de expiracion superado
     void testValidateToken_ExpiredToken() {
         JwtTokenProvider expiredProvider = new JwtTokenProvider();
         ReflectionTestUtils.setField(expiredProvider, "jwtSecret", TEST_SECRET);

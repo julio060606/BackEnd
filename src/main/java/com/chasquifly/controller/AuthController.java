@@ -17,6 +17,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controlador de Autenticacion ChasquiFly.
+ * Expone endpoints OpenAPI para registro (201), inicio de sesion (200, 401) y refresco JWT (200, 401).
+ */
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
@@ -25,6 +29,10 @@ public class AuthController {
 
     private final AuthService authService;
 
+    /**
+     * Endpoint para el registro de nuevos usuarios en la plataforma.
+     * Retorna HTTP 201 en caso de exito y HTTP 400 si los datos son invalidos o el email ya existe.
+     */
     @PostMapping("/register")
     @Operation(summary = "Registrar nuevo usuario", description = "Crea una nueva cuenta de usuario y retorna el token JWT")
     @ApiResponses({
@@ -40,6 +48,10 @@ public class AuthController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    /**
+     * Endpoint para autenticacion e inicio de sesion.
+     * Retorna HTTP 200 con tokens JWT si las credenciales son validas, o HTTP 401 si son incorrectas.
+     */
     @PostMapping("/login")
     @Operation(summary = "Iniciar sesión", description = "Autentica con email y contraseña, retornando tokens JWT")
     @ApiResponses({
@@ -55,6 +67,10 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Endpoint para renovacion de token de acceso JWT.
+     * Retorna HTTP 200 con el nuevo par de tokens o HTTP 401 si el refresh token ha expirado.
+     */
     @PostMapping("/refresh")
     @Operation(summary = "Refrescar token JWT", description = "Genera un nuevo access token utilizando un refresh token válido")
     @ApiResponses({
