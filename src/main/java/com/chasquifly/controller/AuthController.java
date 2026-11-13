@@ -25,6 +25,10 @@ public class AuthController {
 
     private final AuthService authService;
 
+    /**
+     * Endpoint para el registro de nuevos usuarios en la plataforma.
+     * Retorna HTTP 201 en caso de exito y HTTP 400 si los datos son invalidos o el email ya existe.
+     */
     @PostMapping("/register")
     @Operation(summary = "Registrar nuevo usuario", description = "Crea una nueva cuenta de usuario y retorna el token JWT")
     @ApiResponses({
