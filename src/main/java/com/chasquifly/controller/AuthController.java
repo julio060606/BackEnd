@@ -44,6 +44,10 @@ public class AuthController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    /**
+     * Endpoint para autenticacion e inicio de sesion.
+     * Retorna HTTP 200 con tokens JWT si las credenciales son validas, o HTTP 401 si son incorrectas.
+     */
     @PostMapping("/login")
     @Operation(summary = "Iniciar sesión", description = "Autentica con email y contraseña, retornando tokens JWT")
     @ApiResponses({
