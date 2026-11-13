@@ -137,6 +137,7 @@ class AuthServiceTest {
 
     @Test
     @DisplayName("Debe autenticar con credenciales correctas y retornar AuthResponse")
+    // Test 3: Autenticacion exitosa con credenciales correctas
     void testLogin_Success() {
         LoginRequest request = LoginRequest.builder()
                 .email("demo@chasquifly.com")
@@ -159,6 +160,7 @@ class AuthServiceTest {
 
     @Test
     @DisplayName("Debe propagar BadCredentialsException si la contraseña es incorrecta")
+    // Test 4: Manejo de BadCredentialsException ante contrasena invalida
     void testLogin_InvalidCredentials() {
         LoginRequest request = LoginRequest.builder()
                 .email("demo@chasquifly.com")
@@ -174,6 +176,7 @@ class AuthServiceTest {
 
     @Test
     @DisplayName("Debe lanzar ResourceNotFoundException si el usuario no existe tras la autenticación")
+    // Test 5: Manejo de ResourceNotFoundException si el usuario no existe
     void testLogin_UserNotFound() {
         LoginRequest request = LoginRequest.builder()
                 .email("inexistente@chasquifly.com")
@@ -188,6 +191,7 @@ class AuthServiceTest {
 
     @Test
     @DisplayName("Debe refrescar el access token exitosamente con un refresh token válido")
+    // Test 6: Rotacion y emision de nuevo par de tokens con refresh token valido
     void testRefreshToken_Success() {
         RefreshTokenRequest request = new RefreshTokenRequest("valid-refresh-token");
 
@@ -207,6 +211,7 @@ class AuthServiceTest {
 
     @Test
     @DisplayName("Debe lanzar BadRequestException si el refresh token es inválido o expirado")
+    // Test 7: Rechazo de refresh token expirado o alterado con BadRequestException
     void testRefreshToken_InvalidToken() {
         RefreshTokenRequest request = new RefreshTokenRequest("invalid-token");
 
