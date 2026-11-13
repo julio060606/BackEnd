@@ -18,6 +18,7 @@ public class AuthResponse {
     private String accessToken;
 
     @Schema(description = "Token de refresco válido por 7 días", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
+    /** Token de larga duracion (7 dias) utilizado para regenerar el access token sin reingresar credenciales. */
     private String refreshToken;
 
     @Schema(description = "Tipo de token", example = "Bearer")
