@@ -9,6 +9,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * DTO para la solicitud de registro de nuevos clientes ChasquiFly.
+ * Valida nombres, apellidos, formato de email unico y contrasena segura de al menos 8 caracteres.
+ */
 @Data
 @Builder
 @NoArgsConstructor
@@ -31,11 +35,13 @@ public class RegisterRequest {
     @NotBlank(message = "El email es obligatorio")
     @Email(message = "Debe proporcionar un formato de email válido")
     @Schema(description = "Correo electrónico único", example = "julio@chasquifly.com")
+    /** Correo electronico que servira de identificador unico para el usuario. */
     private String email;
 
     @NotBlank(message = "La contraseña es obligatoria")
     @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
     @Schema(description = "Contraseña segura de mínimo 8 caracteres", example = "ChasquiSecure2024!")
+    /** Clave de acceso segura con minimo 8 caracteres antes de ser encriptada en base de datos. */
     private String password;
 
     @Schema(description = "Número telefónico de contacto", example = "+51987654321")
