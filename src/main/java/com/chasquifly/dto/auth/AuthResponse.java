@@ -27,8 +27,10 @@ public class AuthResponse {
     private String tokenType = "Bearer";
 
     @Schema(description = "Tiempo de expiración del access token en segundos", example = "900")
+    /** Tiempo de vigencia del access token en segundos (por defecto 900 s = 15 minutos). */
     private long expiresIn;
 
     @Schema(description = "Datos básicos del usuario autenticado")
+    /** Informacion de perfil resumida del usuario que inicio sesion. */
     private UserSummaryDto user;
 }
