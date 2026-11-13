@@ -19,11 +19,13 @@ public class RegisterRequest {
     @NotBlank(message = "El nombre es obligatorio")
     @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres")
     @Schema(description = "Nombres del usuario", example = "Julio")
+    /** Nombres del usuario, longitud minima de 2 y maxima de 100 caracteres. */
     private String firstName;
 
     @NotBlank(message = "El apellido es obligatorio")
     @Size(min = 2, max = 100, message = "El apellido debe tener entre 2 y 100 caracteres")
     @Schema(description = "Apellidos del usuario", example = "Alvarez")
+    /** Apellidos del usuario, longitud minima de 2 y maxima de 100 caracteres. */
     private String lastName;
 
     @NotBlank(message = "El email es obligatorio")
@@ -37,5 +39,6 @@ public class RegisterRequest {
     private String password;
 
     @Schema(description = "Número telefónico de contacto", example = "+51987654321")
+    /** Numero telefonico de contacto internacional opcional (ej: +51). */
     private String phone;
 }
