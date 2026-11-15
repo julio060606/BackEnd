@@ -21,12 +21,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Cliente HTTP resiliente para integración secundaria con la API externa de Duffel.
+ * Implementa degradación elegante (Graceful Degradation): ante desconexión, ausencia de token
+ * o timeout de red, retorna una colección vacía sin interrumpir el servicio principal.
+ */
 @Component
 @Slf4j
 public class DuffelClient {
 
+    /** Propiedades externalizadas de conexión, timeouts y modo simulado. */
     private final DuffelConfig duffelConfig;
+    /** Cliente REST síncrono de Spring Boot 3 con timeouts acotados. */
     private final RestClient restClient;
+    /** Mapeador JSON para deserialización de nodos de respuesta. */
     private final ObjectMapper objectMapper;
 
     @Autowired
