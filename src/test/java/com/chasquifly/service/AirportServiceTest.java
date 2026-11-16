@@ -76,6 +76,17 @@ class AirportServiceTest {
         verify(airportRepository, times(1)).findAll();
     }
 
+    @Test
+    @DisplayName("Debe devolver una lista vacía cuando el catálogo no tiene aeropuertos")
+    void testGetAllAirports_EmptyCatalog() {
+        when(airportRepository.findAll()).thenReturn(List.of());
+
+        List<AirportDto> result = airportService.getAllAirports();
+
+        assertEquals(List.of(), result);
+        verify(airportRepository).findAll();
+    }
+
     /**
      * Valida la búsqueda exitosa por código IATA tolerando minúsculas y mayúsculas.
      */
@@ -87,9 +98,12 @@ class AirportServiceTest {
         AirportDto result = airportService.getAirportByIataCode("lim");
 
         assertNotNull(result);
+        assertEquals(1, result.getId());
         assertEquals("LIM", result.getIataCode());
         assertEquals("Lima", result.getCity());
         assertEquals("Aeropuerto Internacional Jorge Chávez", result.getName());
+        assertEquals("Perú", result.getCountry());
+        assertEquals("America/Lima", result.getTimezone());
 
         verify(airportRepository, times(1)).findByIataCodeIgnoreCase("lim");
     }
