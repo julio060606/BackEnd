@@ -27,6 +27,6 @@ public class LoginRequest {
 
     @NotBlank(message = "La contraseña es obligatoria")
     @Schema(description = "Contraseña de la cuenta", example = "Password123!")
-    /** Contrasena en texto plano para verificacion contra el hash BCrypt. */
+    /**  FIX Contrasena en texto plano para verificacion contra el hash BCrypt. */
     private String password;
 }
