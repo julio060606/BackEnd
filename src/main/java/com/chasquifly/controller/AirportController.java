@@ -1,8 +1,10 @@
 package com.chasquifly.controller;
 
 import com.chasquifly.dto.airport.AirportDto;
+import com.chasquifly.exception.ErrorResponse;
 import com.chasquifly.service.AirportService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -51,9 +53,11 @@ public class AirportController {
         @ApiResponse(responseCode = "200", description = "Datos del aeropuerto encontrado",
             content = @Content(schema = @Schema(implementation = AirportDto.class))),
         @ApiResponse(responseCode = "404", description = "Aeropuerto no encontrado con ese código IATA",
-            content = @Content(schema = @Schema()))
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
     })
-    public ResponseEntity<AirportDto> getAirportByIataCode(@PathVariable String iataCode) {
+    public ResponseEntity<AirportDto> getAirportByIataCode(
+            @Parameter(description = "Código IATA de 3 letras", example = "LIM")
+            @PathVariable String iataCode) {
         return ResponseEntity.ok(airportService.getAirportByIataCode(iataCode));
     }
 }
