@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  * Controlador REST auxiliar para la búsqueda de ofertas de vuelos en el proveedor externo Duffel.
- * Opera bajo diseño de degradación elegante (Graceful Degradation) y documentación OpenAPI 3 (RNF-05).
+ * Opera bajo diseño de degradación elegante y (Graceful Degradation) y documentación OpenAPI 3 (RNF-05).
  */
 @RestController
 @RequestMapping("/api/v1/flights/external")
